@@ -1,2 +1,3 @@
 # hackernews-node
- https://www.howtographql.com/graphql-js/
+
+Learning GraphQL from this tutorial: https://www.howtographql.com/graphql-js/
