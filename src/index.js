@@ -1,7 +1,6 @@
 //where I left off:
 //Exercise at bottom of https://www.howtographql.com/graphql-js/3-a-simple-mutation/
-//Query link(id: ID) working
-//Mutation updateLink() and deleteLink() not working
+//exercises working, continue on!!
 
 const fs = require('fs');
 const path = require('path');
@@ -34,6 +33,8 @@ const resolvers = {
   },
   Mutation: {
     post: (parent, args) => {
+      console.log('post');
+
       const link = {
         id: `link-${idCount++}`,
         description: args.description,
@@ -43,11 +44,14 @@ const resolvers = {
       return link;
     },
     updateLink: (parent, args) => {
+      console.log('updateLink');
+
       const { id, url, description } = args;
       const linkIndex = findLinkIndex(id);
 
       //checks if linkIndex exists
       if (Math.sign(linkIndex) >= 0) {
+        console.log('id found');
         const link = links[linkIndex];
         const updates = {
           ...link,
@@ -55,14 +59,19 @@ const resolvers = {
           ...(description && { description }),
         };
         links[linkIndex] = updates;
+        console.log(links[linkIndex]);
       }
       return null; //return null if not found
     },
     deleteLink: (parent, args) => {
+      console.log('deleteLink');
       const { id } = args;
-      const linkIndex = findLinkIndex(args.id);
+      const linkIndex = findLinkIndex(id);
       if (Math.sign(linkIndex) >= 0) {
+        const deletedLink = links[linkIndex];
         links.splice(linkIndex, 1);
+        console.log(deletedLink);
+        return deletedLink;
       }
       return null; //return null if not found
     },
